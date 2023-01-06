@@ -24,7 +24,8 @@
     "link": "npx react-native link",
     "apk": "cd android &&./gradlew clean && ./gradlew assembleRelease && cd ../../..",
     "aab": "cd android &&./gradlew clean && ./gradlew bundleRelease && cd ../../..",
-    "pod": "cd ios && pod install && cd ../../.."
+    "pod": "cd ios && pod install && cd ../../..",
+    "all": "react-native run-android && react-native run-ios"
   },
   "dependencies": {
     "@apollo/client": "^3.4.0",
