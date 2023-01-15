@@ -35,8 +35,7 @@
 		"start": "expo start",
 		"android": "expo start --android",
 		"ios": "expo start --ios",
-		"web": "expo start --web",
-		"all": "react-native run-android && react-native run-ios"
+		"web": "expo start --web"
 	},
 	"version": "1.0.0",
 	"private": true,

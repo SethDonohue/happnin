@@ -3,11 +3,14 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useColorScheme } from "react-native";
+import React, { Platform, useColorScheme } from "react-native";
 
 import Colors from "../constants/Colors";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
+import HomeTabScreen from "../screens/HomeTabScreen";
+import AddActivityTabScreen from "../screens/AddActivityTabScreen";
+import ProfileTabScreen from "../screens/ProfileTabScreen";
+import ActivityDetailScreen from "../screens/ActivityDetailScreen";
+import AddActivityPeopleScreen from "../screens/AddActivityPeopleScreen";
 
 const BottomTab = createBottomTabNavigator();
 
@@ -16,12 +19,12 @@ export default function BottomTabNavigator() {
 
 	return (
 		<BottomTab.Navigator
-			initialRouteName="TabOne"
+			initialRouteName="HomeTab"
 			screenOptions={{ tabBarActiveTintColor: Colors[colorScheme].tint }}
 		>
 			<BottomTab.Screen
-				name="TabOne"
-				component={TabOneNavigator}
+				name="HomeTab"
+				component={HomeTabNavigator}
 				options={{
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
@@ -30,9 +33,21 @@ export default function BottomTabNavigator() {
 				}}
 			/>
 			<BottomTab.Screen
-				name="TabTwo"
-				component={TabTwoNavigator}
+				name="AddActivityTab"
+				component={AddActivityTabNavigator}
 				options={{
+					title: "Add Activity",
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="ios-code" color={color} />
+					),
+				}}
+			/>
+			<BottomTab.Screen
+				name="ProfileTab"
+				component={ProfileTabNavigator}
+				options={{
+					title: "Profile",
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="ios-code" color={color} />
@@ -51,30 +66,57 @@ function TabBarIcon(props) {
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const TabOneStack = createStackNavigator();
+const HomeTabStack = createStackNavigator();
 
-function TabOneNavigator() {
+function HomeTabNavigator() {
 	return (
-		<TabOneStack.Navigator>
-			<TabOneStack.Screen
-				name="TabOneScreen"
-				component={TabOneScreen}
-				options={{ headerTitle: "Tab One Title" }}
+		<HomeTabStack.Navigator>
+			<HomeTabStack.Screen
+				name="HomeTabScreen"
+				component={HomeTabScreen}
+				options={{ headerShown: false }}
 			/>
-		</TabOneStack.Navigator>
+			<HomeTabStack.Screen
+				name="ActivityDetail"
+				component={ActivityDetailScreen}
+				options={{ title: " ", headerBackTitle: " " }}
+			/>
+		</HomeTabStack.Navigator>
 	);
 }
 
-const TabTwoStack = createStackNavigator();
+const AddActivityTabStack = createStackNavigator();
 
-function TabTwoNavigator() {
+function AddActivityTabNavigator() {
 	return (
-		<TabTwoStack.Navigator>
-			<TabTwoStack.Screen
-				name="TabTwoScreen"
-				component={TabTwoScreen}
-				options={{ headerTitle: "Tab Two Title" }}
+		<AddActivityTabStack.Navigator>
+			<AddActivityTabStack.Screen
+				name="AddActivityScreen"
+				component={AddActivityTabScreen}
+				options={{ title: "Add a Happnin'" }}
 			/>
-		</TabTwoStack.Navigator>
+			<AddActivityTabStack.Screen
+				name="AddActivityPeopleScreen"
+				component={AddActivityPeopleScreen}
+				options={{
+					title: Platform.OS === "ios" ? null : "Add a Happnin'",
+					headerBackTitle: "Add a Happnin'",
+				}}
+			/>
+		</AddActivityTabStack.Navigator>
+	);
+}
+
+const ProfileTabStack = createStackNavigator();
+
+function ProfileTabNavigator() {
+	return (
+		<ProfileTabStack.Navigator>
+			<ProfileTabStack.Screen
+				name="Profile"
+				component={ProfileTabScreen}
+				options={{ headerShown: false }}
+			/>
+		</ProfileTabStack.Navigator>
 	);
 }
