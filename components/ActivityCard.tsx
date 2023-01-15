@@ -1,16 +1,23 @@
 import React, { Platform, StyleSheet, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Text, View } from "./Themed";
 
 export const ActivityCard = ({ children, data }) => {
+	const navigation = useNavigation();
+
 	return (
-		<View style={styles.container}>
-			{children}
-			<View style={styles.dataContainer}>
-				<Text>{data.title}</Text>
-				<Text>{data.time}</Text>
-				<Text>{data.author}</Text>
+		<TouchableOpacity
+			onPress={() => navigation.navigate("ActivityDetailsScreen", data)}
+		>
+			<View style={styles.container}>
+				{children}
+				<View style={styles.dataContainer}>
+					<Text>{data.title}</Text>
+					<Text>{data.time}</Text>
+					<Text>{data.author}</Text>
+				</View>
 			</View>
-		</View>
+		</TouchableOpacity>
 	);
 };
 

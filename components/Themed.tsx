@@ -1,9 +1,11 @@
 // Learn more about Light and Dark modes:
 // https://docs.expo.dev/guides/color-schemes/
 import React, {
+	StyleSheet,
 	Text as DefaultText,
 	useColorScheme,
 	View as DefaultView,
+	TouchableOpacity,
 } from "react-native";
 
 import Colors from "../constants/Colors";
@@ -34,4 +36,31 @@ export function View(props) {
 	);
 
 	return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+}
+
+export const buttonStyles = StyleSheet.create({
+	container: {
+		backgroundColor: "rgb(101,87,245)",
+	},
+	text: {
+		fontSize: 18,
+		color: "#fff",
+		fontWeight: "bold",
+		alignSelf: "center",
+		textTransform: "uppercase",
+	},
+});
+
+export function Button(props) {
+	const { style, lightColor, darkColor, title, ...otherProps } = props;
+	const backgroundColor = useThemeColor(
+		{ light: lightColor, dark: darkColor },
+		"background"
+	);
+
+	return (
+		<TouchableOpacity style={[style, buttonStyles.container]} {...otherProps}>
+			<Text style={buttonStyles.text}>{title}</Text>
+		</TouchableOpacity>
+	);
 }

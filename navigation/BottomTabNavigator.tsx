@@ -77,9 +77,14 @@ function HomeTabNavigator() {
 				options={{ headerShown: false }}
 			/>
 			<HomeTabStack.Screen
-				name="ActivityDetail"
+				name="ActivityDetailsScreen"
 				component={ActivityDetailScreen}
-				options={{ title: " ", headerBackTitle: " " }}
+				options={{
+					title: " ",
+					headerBackTitle: " ",
+					headerShadowVisible: false,
+					headerTransparent: true,
+				}}
 			/>
 		</HomeTabStack.Navigator>
 	);
