@@ -38,29 +38,56 @@ export function View(props) {
 	return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
-export const buttonStyles = StyleSheet.create({
+export const outlineButtonStyles = StyleSheet.create({
+	container: {
+		backgroundColor: "#fff",
+		borderColor: "rgba(101,87,245, 0.5)",
+		borderWidth: 1,
+		padding: 8,
+		paddingHorizontal: 20,
+		borderRadius: 4,
+	},
+	text: {
+		fontSize: 18,
+		color: "rgb(101,87,245)",
+		alignSelf: "center",
+	},
+});
+
+export const solidButtonStyles = StyleSheet.create({
 	container: {
 		backgroundColor: "rgb(101,87,245)",
+		borderColor: "rgb(101,87,245)",
+		borderWidth: 1,
+		padding: 8,
+		paddingHorizontal: 20,
+		borderRadius: 4,
 	},
 	text: {
 		fontSize: 18,
 		color: "#fff",
-		fontWeight: "bold",
 		alignSelf: "center",
-		textTransform: "uppercase",
 	},
 });
 
 export function Button(props) {
-	const { style, lightColor, darkColor, title, ...otherProps } = props;
+	const { style, type, lightColor, darkColor, title, ...otherProps } = props;
 	const backgroundColor = useThemeColor(
 		{ light: lightColor, dark: darkColor },
 		"background"
 	);
 
+	let styles = solidButtonStyles;
+	if (type) {
+		switch (props.type) {
+			case "outline":
+				styles = outlineButtonStyles;
+		}
+	}
+
 	return (
-		<TouchableOpacity style={[style, buttonStyles.container]} {...otherProps}>
-			<Text style={buttonStyles.text}>{title}</Text>
+		<TouchableOpacity style={[style, styles.container]} {...otherProps}>
+			<Text style={styles.text}>{title}</Text>
 		</TouchableOpacity>
 	);
 }
