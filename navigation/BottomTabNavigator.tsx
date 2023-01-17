@@ -1,6 +1,6 @@
 // Learn more about createBottomTabNavigator:
 // https://reactnavigation.org/docs/bottom-tab-navigator
-import Ionicons from "@expo/vector-icons/Ionicons";
+import { MaterialIcons } from "@expo/vector-icons/";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { Platform, useColorScheme } from "react-native";
@@ -20,15 +20,19 @@ export default function BottomTabNavigator() {
 	return (
 		<BottomTab.Navigator
 			initialRouteName="HomeTab"
-			screenOptions={{ tabBarActiveTintColor: Colors[colorScheme].tint }}
+			screenOptions={{
+				tabBarActiveTintColor: Colors[colorScheme].tint,
+				tabBarStyle: { paddingTop: 10 },
+			}}
 		>
 			<BottomTab.Screen
 				name="HomeTab"
 				component={HomeTabScreen}
 				options={{
 					headerShown: false,
+					title: "",
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="ios-code" color={color} />
+						<TabBarIcon name="home-filled" color={color} />
 					),
 				}}
 			/>
@@ -36,10 +40,10 @@ export default function BottomTabNavigator() {
 				name="AddActivityTab"
 				component={AddActivityTabNavigator}
 				options={{
-					title: "Add Activity",
+					title: "",
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="ios-code" color={color} />
+						<TabBarIcon name="add-box" color={color} />
 					),
 				}}
 			/>
@@ -47,10 +51,10 @@ export default function BottomTabNavigator() {
 				name="ProfileTab"
 				component={ProfileTabNavigator}
 				options={{
-					title: "Profile",
+					title: "",
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="ios-code" color={color} />
+						<TabBarIcon name="account-circle" color={color} />
 					),
 				}}
 			/>
@@ -61,7 +65,7 @@ export default function BottomTabNavigator() {
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props) {
-	return <Ionicons size={30} style={{ marginBottom: -3 }} {...props} />;
+	return <MaterialIcons size={30} style={{ marginBottom: -3 }} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
