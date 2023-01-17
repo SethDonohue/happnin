@@ -6,28 +6,28 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React, { Platform, useColorScheme } from "react-native";
 
 import Colors from "../constants/Colors";
-import HomeTabScreen from "../screens/HomeTabScreen";
+import HomeScreen from "../screens/HomeScreen";
 import AddActivityTabScreen from "../screens/AddActivityTabScreen";
 import ProfileTabScreen from "../screens/ProfileTabScreen";
 import ActivityDetailScreen from "../screens/ActivityDetailScreen";
 import AddActivityPeopleScreen from "../screens/AddActivityPeopleScreen";
 
-const BottomTab = createBottomTabNavigator();
+const HomeBottomTab = createBottomTabNavigator();
 
-export default function BottomTabNavigator() {
+export default function HomeBottomTabNavigator() {
 	const colorScheme = useColorScheme();
 
 	return (
-		<BottomTab.Navigator
-			initialRouteName="HomeTab"
+		<HomeBottomTab.Navigator
+			initialRouteName="HomeScreen"
 			screenOptions={{
 				tabBarActiveTintColor: Colors[colorScheme].tint,
-				tabBarStyle: { paddingTop: 10 },
+				tabBarStyle: { paddingTop: 10, height: 100 },
 			}}
 		>
-			<BottomTab.Screen
-				name="HomeTab"
-				component={HomeTabScreen}
+			<HomeBottomTab.Screen
+				name="HomeScreen"
+				component={HomeScreen}
 				options={{
 					headerShown: false,
 					title: "",
@@ -36,18 +36,19 @@ export default function BottomTabNavigator() {
 					),
 				}}
 			/>
-			<BottomTab.Screen
+			<HomeBottomTab.Screen
 				name="AddActivityTab"
-				component={AddActivityTabNavigator}
+				component={AddActivityStackNavigator}
 				options={{
 					title: "",
 					headerShown: false,
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="add-box" color={color} />
 					),
+					tabBarStyle: { display: "none" },
 				}}
 			/>
-			<BottomTab.Screen
+			<HomeBottomTab.Screen
 				name="ProfileTab"
 				component={ProfileTabNavigator}
 				options={{
@@ -58,29 +59,39 @@ export default function BottomTabNavigator() {
 					),
 				}}
 			/>
-		</BottomTab.Navigator>
+		</HomeBottomTab.Navigator>
 	);
 }
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
 function TabBarIcon(props) {
-	return <MaterialIcons size={30} style={{ marginBottom: -3 }} {...props} />;
+	return <MaterialIcons size={40} style={{ marginBottom: -10 }} {...props} />;
+}
+
+function MediumIcon(props) {
+	return <MaterialIcons size={24} {...props} />;
 }
 
 // Each tab has its own navigation stack, you can read more about this pattern here:
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
-const HomeTabStack = createStackNavigator();
+const HomeStack = createStackNavigator();
 
-export function HomeTabNavigator() {
+export function HomeStackNavigator() {
 	return (
-		<HomeTabStack.Navigator>
-			<HomeTabStack.Screen
+		<HomeStack.Navigator>
+			<HomeStack.Screen
 				name="HomeTabScreen"
-				component={BottomTabNavigator}
+				component={HomeBottomTabNavigator}
 				options={{ headerShown: false }}
 			/>
-			<HomeTabStack.Screen
+			<HomeStack.Screen
+				name="AddActivityStackNavigator"
+				component={AddActivityStackNavigator}
+				options={{ headerShown: false }}
+			/>
+
+			<HomeStack.Screen
 				name="ActivityDetailsScreen"
 				component={ActivityDetailScreen}
 				options={{
@@ -90,29 +101,42 @@ export function HomeTabNavigator() {
 					headerTransparent: true,
 				}}
 			/>
-		</HomeTabStack.Navigator>
+		</HomeStack.Navigator>
 	);
 }
 
-const AddActivityTabStack = createStackNavigator();
+const AddActivityStack = createStackNavigator();
 
-function AddActivityTabNavigator() {
+export function AddActivityStackNavigator({ navigation }) {
 	return (
-		<AddActivityTabStack.Navigator>
-			<AddActivityTabStack.Screen
+		<AddActivityStack.Navigator>
+			<AddActivityStack.Screen
 				name="AddActivityScreen"
 				component={AddActivityTabScreen}
-				options={{ title: "Add a Happnin'" }}
+				options={{
+					headerBackTitle: "Home",
+					title: "Add a Happnin'",
+					headerLeft: (props) => (
+						<MediumIcon
+							style={{ marginHorizontal: 10 }}
+							name={Platform.OS === "ios" ? "chevron-left" : "arrow-back"}
+							color={props.tintColor}
+							onPress={() => {
+								navigation.goBack();
+							}}
+						/>
+					),
+				}}
 			/>
-			<AddActivityTabStack.Screen
+			<AddActivityStack.Screen
 				name="AddActivityPeopleScreen"
 				component={AddActivityPeopleScreen}
 				options={{
-					title: Platform.OS === "ios" ? null : "Add a Happnin'",
-					headerBackTitle: "Add a Happnin'",
+					title: "Add People",
+					headerBackTitle: " ",
 				}}
 			/>
-		</AddActivityTabStack.Navigator>
+		</AddActivityStack.Navigator>
 	);
 }
 

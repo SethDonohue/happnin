@@ -34,7 +34,7 @@ const testSectionsByDate = [
 	},
 ];
 
-export default function HomeTabScreen({ navigation }) {
+export default function HomeScreen({ navigation }) {
 	return (
 		<SafeAreaView style={styles.container}>
 			{/* <Text style={styles.title}>Home</Text> */}
