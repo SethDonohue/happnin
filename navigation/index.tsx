@@ -9,7 +9,7 @@ import {
 import { createStackNavigator } from "@react-navigation/stack";
 
 import NotFoundScreen from "../screens/NotFoundScreen";
-import BottomTabNavigator from "./BottomTabNavigator";
+import BottomTabNavigator, { HomeTabNavigator } from "./BottomTabNavigator";
 import LinkingConfiguration from "./LinkingConfiguration";
 import LoginScreen from "../screens/LoginScreen";
 
@@ -40,7 +40,7 @@ function RootNavigator() {
 		>
 			<Stack.Screen
 				name="Root"
-				component={BottomTabNavigator}
+				component={HomeTabNavigator}
 				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
